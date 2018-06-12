@@ -9,10 +9,13 @@ var GAP = 50;
 var BAR_WIDTH = 40;
 var VERTICAL_GAP = 20;
 var TEXT_HEIGHT = 10;
-var BAR_HEIGHT = (4 * TEXT_HEIGHT) + (4 * VERTICAL_GAP) - CLOUD_HEIGHT;
 var USER_COLUMN_COLOR = 'rgba(255, 0, 0, 1)';
 var TEXT_X = CLOUD_X + GAP;
 var TEXT_Y = CLOUD_Y + VERTICAL_GAP;
+var BAR_MAX_HEIGHT = 150;
+var HISTO_LEFT_MARGIN = 45;
+var TEXT_AREA_HEIGHT = 95;
+var TEXT_LINE_HEIGHT = 20;
 
 
 var renderCloud = function (ctx, x, y, color) {
@@ -55,17 +58,18 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
+    // Вычисляем высоты бара в гистограмме
+    var BAR_HEIGHT = ((CLOUD_HEIGHT * times[i]) / maxTime) - 100;
     if (players[i] === 'Вы') {
       ctx.fillStyle = USER_COLUMN_COLOR; // Красим в красный
     } else {
       ctx.fillStyle = getRandomBlue(); // Красим в синий
     }
-    ctx.fillRect(CLOUD_X + GAP + (GAP + BAR_WIDTH) * i, CLOUD_HEIGHT - VERTICAL_GAP - TEXT_HEIGHT, BAR_WIDTH,
-        (BAR_HEIGHT * times[i]) / maxTime);
-    ctx.fillStyle = '#000';
-    ctx.fillText(players[i], CLOUD_X + GAP + (GAP + BAR_WIDTH) * i, CLOUD_HEIGHT - CLOUD_Y);
-    ctx.fillText(Math.floor(times[i]), CLOUD_X + GAP + (GAP + BAR_WIDTH) * i, CLOUD_HEIGHT - (TEXT_HEIGHT * 2) - VERTICAL_GAP +
-      (BAR_HEIGHT * times[i]) / maxTime);
-
+    // Рисуем бар
+    ctx.fillRect(CLOUD_X + HISTO_LEFT_MARGIN + (BAR_WIDTH + GAP) * i, (CLOUD_Y + BAR_MAX_HEIGHT - BAR_HEIGHT) + TEXT_AREA_HEIGHT, BAR_WIDTH, BAR_HEIGHT);
+    // Выводим имена игроков и очки
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+    ctx.fillText(players[i], CLOUD_X + HISTO_LEFT_MARGIN + (BAR_WIDTH + GAP) * i, CLOUD_HEIGHT);
+    ctx.fillText(Math.floor(times[i]), CLOUD_X + HISTO_LEFT_MARGIN + (BAR_WIDTH + GAP) * i, CLOUD_HEIGHT - BAR_HEIGHT - TEXT_LINE_HEIGHT);
   }
 };
