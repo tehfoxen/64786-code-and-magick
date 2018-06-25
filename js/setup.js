@@ -44,8 +44,22 @@ var FIREBALL_COLORS = [
   '#30a8ee',
   '#5ce6c0',
   '#e848d5',
-  '#e6e848'];
-
+  '#e6e848'
+];
+// одеть надежду
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var setup = document.querySelector('.setup');
+var wizardSetup = setup.querySelector('.setup-wizard');
+var wizardCoat = wizardSetup.querySelector('.wizard-coat');
+var wizardCoatInput = setup.querySelector('input[name="coat-color"]');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var userNameInput = setup.querySelector('.setup-user-name');
+var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
+var wizardEyesInput = setup.querySelector('input[name="eyes-color"]');
+var fireball = setup.querySelector('.setup-fireball-wrap');
+var fireballInput = setup.querySelector('input[name="fireball-color"]');
 var userDialog = document.querySelector('.setup');
 
 
@@ -89,21 +103,6 @@ var insertElements = function (parentNode) {
 
 insertElements(similarListElement);
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
-
-// одеть надежду
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
-var setup = document.querySelector('.setup');
-var wizardSetup = setup.querySelector('.setup-wizard');
-var wizardCoat = wizardSetup.querySelector('.wizard-coat');
-var wizardCoatInput = setup.querySelector('input[name="coat-color"]');
-var setupOpen = document.querySelector('.setup-open');
-var setupClose = setup.querySelector('.setup-close');
-var userNameInput = setup.querySelector('.setup-user-name');
-var wizardEyes = wizardSetup.querySelector('.wizard-eyes');
-var wizardEyesInput = setup.querySelector('input[name="eyes-color"]');
-var fireball = setup.querySelector('.setup-fireball-wrap');
-var fireballInput = setup.querySelector('input[name="fireball-color"]');
 
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -169,19 +168,19 @@ userNameInput.addEventListener('input', function (evt) {
 
 
 wizardCoat.addEventListener('click', function () {
-  var color = getRandomIntegerFromInterval(COATS_COLORS);
+  var color = COATS_COLORS[getRandomIntegerFromInterval(0, COATS_COLORS.length - 1)];
   wizardCoat.style.fill = color;
   wizardCoatInput.value = color;
 });
 
 wizardEyes.addEventListener('click', function () {
-  var color = getRandomIntegerFromInterval(EYES_COLORS);
+  var color = EYES_COLORS[getRandomIntegerFromInterval(0, EYES_COLORS.length - 1)];
   wizardEyes.style.fill = color;
   wizardEyesInput.value = color;
 });
 
 fireball.addEventListener('click', function () {
-  var color = getRandomIntegerFromInterval(FIREBALL_COLORS);
+  var color = FIREBALL_COLORS[getRandomIntegerFromInterval(0, EYES_COLORS.length - 1)];
   fireball.style.background = color;
   fireballInput.value = color;
 });
